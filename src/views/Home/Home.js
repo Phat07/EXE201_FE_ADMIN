@@ -74,19 +74,19 @@ function Home() {
   console.log(" 2: ", allMember);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actProductCountGetAsync());
-    dispatch(actAuctionedtProductCountGetAsync());
-    dispatch(actUnAuctionedtProductCountGetAsync());
-    dispatch(actAuctionCountGetAsync());
-    dispatch(actAboutToAuctionCountGetAsync());
-    dispatch(actAuctionedAuctionCountGetAsync());
-    dispatch(actAuctioningAuctionCountGetAsync());
-    dispatch(actNotYetAuctionCountGetAsync());
-    dispatch(actMemberCountGetAsync(token));
-    dispatch(actHostCountGetAsync(token));
-    dispatch(actAgvMemberAuctiontGetAsync(token));
-    dispatch(actDepositCountGetAsync(token));
-    dispatch(actWithdrawCountGetAsync(token));
+    // dispatch(actProductCountGetAsync());
+    // dispatch(actAuctionedtProductCountGetAsync());
+    // dispatch(actUnAuctionedtProductCountGetAsync());
+    // dispatch(actAuctionCountGetAsync());
+    // dispatch(actAboutToAuctionCountGetAsync());
+    // dispatch(actAuctionedAuctionCountGetAsync());
+    // dispatch(actAuctioningAuctionCountGetAsync());
+    // dispatch(actNotYetAuctionCountGetAsync());
+    // dispatch(actMemberCountGetAsync(token));
+    // dispatch(actHostCountGetAsync(token));
+    // dispatch(actAgvMemberAuctiontGetAsync(token));
+    // dispatch(actDepositCountGetAsync(token));
+    // dispatch(actWithdrawCountGetAsync(token));
   }, [dispatch, token]);
   const productData = {
     labels: [
@@ -216,7 +216,7 @@ function Home() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <div
+      {/* <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
@@ -234,7 +234,6 @@ function Home() {
         <div>
           <h2>Biểu đồ người dùng trong hệ thống</h2>
           <div style={{ width: "50%", height: "auto" }}>
-            {/* <div> */}
             <Doughnut
               data={UserData}
               options={{ responsive: true, aspectRatio: 1 }}
@@ -255,32 +254,7 @@ function Home() {
             {withdarwCount?.count}
           </h5>
         </div>
-
-        {/* <div>
-          <h2>Biểu đồ đấu giá</h2>
-          <Line data={auctionData} options={{ responsive: true }} />
-        </div>
-        <div>
-          <h2>Biểu đồ tài chính</h2>
-          <div style={{ width: "50%", height: "auto" }}>
-            <Doughnut
-              data={financeData}
-              options={{ responsive: true, aspectRatio: 1 }}
-            />
-          </div>
-        </div>
-        <div>
-          <h2>Sản phẩm được tạo trong ngày</h2>
-          <Bar data={productsCreatedTodayData} options={{ responsive: true }} />
-        </div>
-        <div>
-          <h2>Auction được tạo trong ngày</h2>
-          <Line
-            data={auctionsCreatedTodayData}
-            options={{ responsive: true }}
-          />
-        </div> */}
-      </div>
+      </div> */}
     </div>
   );
 }

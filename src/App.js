@@ -34,9 +34,10 @@ function RouterContent() {
     } else {
       UserServices.fetchMe(token)
         .then((res) => {
-          if (res.data && res.data.user) {
-            const currentUser = res.data.user;
-            const role = res.data.user.title;
+          if (res.data && res.data.customerResponse) {
+            const currentUser = res.data.customerResponse;
+            console.log(res.data.customerResponse);
+            const role = res.data.roleName;
             dispatch(actUserLogin(currentUser, token, role));
           } else {
             navigate("/login");
@@ -68,7 +69,7 @@ function App() {
             <Route exact path="/500" name="Page 500" element={<Page500 />} />
             <Route path="*" name="Home" element={<DefaultLayout />} />
           </Routes>
-          <RouterContent /> {/* Sử dụng RouterContent ở đây */}
+          <RouterContent />
         </Suspense>
       </HashRouter>
       <ToastContainer

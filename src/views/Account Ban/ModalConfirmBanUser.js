@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { actConfirmBanUserPutAsync } from "../../store/user/action";
+// import { actConfirmBanUserPutAsync } from "../../store/user/action";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -15,18 +15,18 @@ const ModalConfirmBanUser = (props) => {
   const dispatch = useDispatch();
   // const confirm = useSelector((state) => state.USER.allUser);
   // console.log("confirm", confirm);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(
-      actConfirmBanUserPutAsync(
-        confirmData?.user_id?._id,
-        { note: "Bạn đã bị ban" },
-        token
-      )
-    );
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   dispatch(
+  //     actConfirmBanUserPutAsync(
+  //       confirmData?.user_id?._id,
+  //       { note: "Bạn đã bị ban" },
+  //       token
+  //     )
+  //   );
 
-    handleClose();
-  };
+  //   handleClose();
+  // };
 
   return (
     <>
@@ -86,7 +86,10 @@ const ModalConfirmBanUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button
+            variant="primary"
+            // onClick={handleSubmit}
+          >
             Confirm
           </Button>
         </Modal.Footer>

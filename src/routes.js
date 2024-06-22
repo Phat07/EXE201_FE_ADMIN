@@ -2,7 +2,7 @@ import React from "react";
 import Config from "./views/Config/Config";
 import DetailConfig from "./views/Config/DetailConfig";
 const Profile = React.lazy(() => import("./views/Profile/Profile"));
-const Account = React.lazy(() => import("./views/Account/Account"));
+const Account = React.lazy(() => import("./views/AccountCustomer/Account"));
 const Aution = React.lazy(() => import("./views/Aution/Aution"));
 const Product = React.lazy(() => import("./views/Product/Product"));
 const ProductDetail = React.lazy(() => import("./views/Product/ProductDetail"));
@@ -10,7 +10,9 @@ const TransactionRequest = React.lazy(() =>
   import("./views/Transaction/TransactionRequest")
 );
 const Home = React.lazy(() => import("./views/Home/Home"));
-const AccountDetail = React.lazy(() => import("./views/Account/AccountDetail"));
+const AccountDetail = React.lazy(() =>
+  import("./views/AccountCustomer/AccountDetail")
+);
 const AutionDetail = React.lazy(() => import("./views/Aution/AutionDetail"));
 const AutionConfirm = React.lazy(() => import("./views/Aution/AuctionConfirm"));
 const BanRequest = React.lazy(() => import("./views/Account Ban/BanRequest"));

@@ -12,4 +12,7 @@ export const voucherService = {
   getVoucherById(id) {
     return API.get(`vouchers/GetVoucherById/${id}`);
   },
+  createVoucher(data) {
+    return API.post(`vouchers/CreateVoucher`, data);
+  },
 };

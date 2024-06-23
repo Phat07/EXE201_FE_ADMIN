@@ -93,7 +93,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "Voucher",
-        to: "/product",
+        to: "/voucher",
       },
     ],
   },

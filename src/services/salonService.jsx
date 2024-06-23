@@ -33,4 +33,7 @@ export const SalonInfomationService = {
   GetVoucherBySalonInformationId(id) {
     return API.get(`vouchers/GetVoucherBySalonId/${id}`);
   },
+  changeStatusSalon(data) {
+    return API.post(`approvals/CreateApproval`, data);
+  },
 };

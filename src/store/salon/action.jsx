@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { SalonInfomationService } from "src/services/salonService";
 export const ACT_SALON_INFORMATION = "ACT_SALON_INFORMATION";
 export const ACT_SALON_INFORMATION_BY_ID = "ACT_SALON_INFORMATION_BY_ID";
@@ -119,6 +120,31 @@ export function fetchServiceHairBySalonInformationId(id) {
       const response =
         await SalonInfomationService.GetServiceHairBySalonInformationId(id);
       dispatch({ type: GET_SALON_SERVICE_BY_SALON_ID, payload: response.data });
+    } catch (error) {
+      console.error(
+        "Failed to fetch ServiceHair By SalonInformationId:",
+        error
+      );
+    }
+  };
+}
+export function fetchUpdateStatusBySalon(data, currentPage, itemsPerPage) {
+  return async (dispatch) => {
+    try {
+      const response = await SalonInfomationService.changeStatusSalon(data)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(
+            fetchSalonInformation(
+              { status: "PENDING" },
+              currentPage,
+              itemsPerPage
+            )
+          );
+        })
+        .catch((err) => {
+          toast.error("Error status");
+        });
     } catch (error) {
       console.error(
         "Failed to fetch ServiceHair By SalonInformationId:",

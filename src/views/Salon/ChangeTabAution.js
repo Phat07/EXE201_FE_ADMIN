@@ -64,6 +64,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -115,6 +117,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -166,6 +170,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -217,6 +223,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -268,6 +276,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -319,6 +329,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />
@@ -370,6 +382,8 @@ const ChangeTabAution = (props) => {
         <div>
           {
             <TableAution
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
               data={salonInformation?.items}
               onUpdate={handleUpdateUser}
             />

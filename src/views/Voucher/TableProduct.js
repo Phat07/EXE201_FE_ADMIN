@@ -14,9 +14,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types"; // Import PropTypes
+import { useNavigate } from "react-router-dom";
 
 const TableProduct = (props) => {
   const { data = [], onUpdate, onDelete } = props;
+  const navigate = useNavigate();
   const dateModify = (date) => {
     if (date) {
       const [datePart, timePart] = date?.split("T");
@@ -28,17 +30,21 @@ const TableProduct = (props) => {
   return (
     <CRow>
       <Col xs="auto">
-        {" "}
-        {/* Sử dụng xs="auto" để ô chỉ chiếm không gian cần thiết */}
         <Form className="d-flex mb-3" role="search">
-          <Form.Control
+          {/* <Form.Control
             className="me-2"
             type="search"
             placeholder="Search Name Auction"
             aria-label="Search"
-          />
-          <Button variant="outline-success" type="submit">
-            Search
+          /> */}
+          <Button
+            variant="outline-success"
+            type="submit"
+            onClick={() => {
+              navigate(`/create-voucher`);
+            }}
+          >
+            Create New Voucher
           </Button>
         </Form>
       </Col>
@@ -66,9 +72,9 @@ const TableProduct = (props) => {
               <CTableDataCell>{dateModify(item?.expiryDate)}</CTableDataCell>
               <CTableDataCell>
                 {item?.isActive === false ? (
-                  <CBadge color="danger">Not public</CBadge>
+                  <CBadge color="danger">Không hoạt động</CBadge>
                 ) : (
-                  <CBadge color="success">Public</CBadge>
+                  <CBadge color="success">Hoạt động</CBadge>
                 )}
               </CTableDataCell>
               <CTableDataCell>

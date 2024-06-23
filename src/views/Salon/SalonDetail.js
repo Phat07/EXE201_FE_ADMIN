@@ -69,7 +69,7 @@ const AutionDetail = () => {
 
   const indexOfLastVoucher = currentPageVoucher * vouchersPerPage;
   const indexOfFirstVoucher = indexOfLastVoucher - vouchersPerPage;
-  const currentVouchers = salonVoucher.items.slice(
+  const currentVouchers = salonVoucher?.items?.slice(
     indexOfFirstVoucher,
     indexOfLastVoucher
   );
@@ -228,7 +228,7 @@ const AutionDetail = () => {
       <div>
         <h2>Danh sách voucher</h2>
         <Row>
-          {currentVouchers.map((voucher) => (
+          {currentVouchers?.map((voucher) => (
             <Col key={voucher.id} md={4} className="mb-4">
               {" "}
               {/* Sử dụng md={4} để chia layout thành 3 cột trên màn hình lớn */}

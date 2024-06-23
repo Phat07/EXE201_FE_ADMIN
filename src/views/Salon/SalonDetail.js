@@ -8,257 +8,278 @@ import {
   CRow,
   CButton,
 } from "@coreui/react";
-import { Card, Row, Col, Button, Form, Carousel } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  actAuctionGetAsync,
-  actGetAllMemberJoinAuctionRoomGetAsync,
-} from "../../store/auction/action";
+  Card,
+  Row,
+  Col,
+  Button,
+  Form,
+  Carousel,
+  Container,
+} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchSalonInformationById } from "src/store/salon/action";
 const AutionDetail = () => {
-  const { auctionId } = useParams(); // Lấy ID từ URL
+  const { auctionId } = useParams();
   const navigate = useNavigate();
-  // const auctions = useSelector((state) => state.AUCTION.auctions);
-  // console.log("aucctionsss", auctions);
-  // const allMemberJoinInAuction = useSelector(
-  //   (state) => state.AUCTION.allMemberJoinInAuction
-  // );
-  // const filterNumberMemberJoinRoom = allMemberJoinInAuction?.filter(
-  //   (e) => e?.member_id?.role_id?.title !== "HOST"
-  // );
-  const { salonService, salonDetail, salonEmployee, voucher } = useSelector(
-    (state) => state.SALON
-  );
+
+  const { salonService, salonDetail, salonEmployee, salonVoucher } =
+    useSelector((state) => state.SALON);
   console.log("salonService", salonService);
   console.log("salonDetail", salonDetail);
   console.log("salonEmployee", salonEmployee);
-  console.log("voucher", voucher);
-  // const token = localStorage.getItem("ACCESS_TOKEN");
+  console.log("voucher", salonVoucher);
   const dispatch = useDispatch();
   const [auction, setAuction] = useState("");
-  // useEffect(() => {
-  //   dispatch(actAuctionGetAsync(token));
-  //   dispatch(actGetAllMemberJoinAuctionRoomGetAsync(auctionId, token));
-  // }, [auctionId, dispatch, token]);
+
   useEffect(() => {
     async function fetchData() {
       dispatch(fetchSalonInformationById(auctionId));
-      // dispatch(fetchSalonEmployeeBySalonInformationId(product));
-      // dispatch(fetchServiceHairBySalonInformationId(product));
     }
 
     fetchData();
   }, []);
-  // useEffect(() => {
-  //   const item = auctions.find((i) => i._id === auctionId);
-  //   setAuction(item);
-  // }, [auctions, auctionId]);
-  // console.log("auctionDetail", auction);
-  // function formatCurrencyVND(amount) {
-  //   return amount?.toLocaleString("vi-VN", {
-  //     style: "currency",
-  //     currency: "VND",
-  //   });
-  // }
+
+  const [currentPageService, setCurrentPageService] = useState(1);
+  const [servicesPerPage] = useState(3); // Giả sử 6 dịch vụ trên mỗi trang
+
+  const indexOfLastService = currentPageService * servicesPerPage;
+  const indexOfFirstService = indexOfLastService - servicesPerPage;
+  const currentServices = salonService.slice(
+    indexOfFirstService,
+    indexOfLastService
+  );
+
+  const paginateService = (pageNumber) => setCurrentPageService(pageNumber);
+
+  const [currentPageEmployee, setCurrentPageEmployee] = useState(1);
+  const [employeesPerPage] = useState(3); // Giả sử 6 nhân viên trên mỗi trang
+
+  const indexOfLastEmployee = currentPageEmployee * employeesPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+  const currentEmployees = salonEmployee.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee
+  );
+
+  const paginateEmployee = (pageNumber) => setCurrentPageEmployee(pageNumber);
+
+  const [currentPageVoucher, setCurrentPageVoucher] = useState(1);
+  const [vouchersPerPage] = useState(3);
+
+  const indexOfLastVoucher = currentPageVoucher * vouchersPerPage;
+  const indexOfFirstVoucher = indexOfLastVoucher - vouchersPerPage;
+  const currentVouchers = salonVoucher.items.slice(
+    indexOfFirstVoucher,
+    indexOfLastVoucher
+  );
+
+  const paginateVoucher = (pageNumber) => setCurrentPageVoucher(pageNumber);
+
   return (
-    // <CRow>
-    //   <CCol xs={12}>
-    //     <CCard className="mb-4">
-    //       <CCardBody>
-    <Row>
-      <Col xs={12}>
-        <Card className="mb-4">
-          <Card.Header>
-            <strong>Thông tin chi tiết Salon </strong>
-          </Card.Header>
-          <Card.Body>
-            <Form>
-              <Row className="mb-4">
-                <Col md={6}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Ảnh Sản Phẩm</Card.Title>
-                      <Carousel>
-                        {auction?.product_id?.image?.map((image, index) => (
-                          <Carousel.Item key={index}>
-                            <img
-                              className="d-block w-100"
-                              src={image}
-                              alt={`Slide ${index + 1}`}
-                              style={{
-                                height: "400px",
-                                objectFit: "cover",
-                                width: "100%",
-                              }}
-                            />
-                          </Carousel.Item>
-                        ))}
-                      </Carousel>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={6}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Video Sản Phẩm</Card.Title>
-                      <div
-                        style={{
-                          position: "relative",
-                          marginTop: "20px",
-                        }}
-                      >
-                        {/* <video controls style={{ maxWidth: "100%" }}>
-                          <source
-                            src={auction?.product_id?.video}
-                            type="video/mp4"
-                          />
-                          Your browser does not support the video tag.
-                        </video> */}
-                        <video controls style={{ maxWidth: "100%" }}>
-                          {auction?.product_id?.video?.map((video, index) => (
-                            <source key={index} src={video} type="video/mp4" />
-                          ))}
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Thông Tin Sản Phẩm</Card.Title>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Tên sản phẩm</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Nhập tên sản phẩm"
-                          readOnly={auctionId}
-                          value={auction?.product_id?.name}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Mô tả</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={3}
-                          placeholder="Mô tả sản phẩm"
-                          readOnly={auctionId}
-                          value={auction?.product_id?.description}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Giá khởi điểm</Form.Label>
-                        <Form.Control
-                          placeholder="Giá khởi điểm"
-                          readOnly={auctionId}
-                          value={auction?.starting_price}
-                        />
-                      </Form.Group>
-                    </Card.Body>
-                  </Card>
-                  <Card style={{ marginTop: "10px" }}>
-                    <Card.Body>
-                      <Card.Title>Số lượng người tham gia đấu giá</Card.Title>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Số lượng:</Form.Label>
-                      </Form.Group>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={6}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Thông Tin Auction</Card.Title>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Thong tin dau gia</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          readOnly={auctionId}
-                          rows={3}
-                          placeholder="Thông tin đấu giá"
-                          value={auction?.auctionInfo}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Bước giá tối thiểu</Form.Label>
-                        <Form.Control
-                          readOnly={auctionId}
-                          placeholder="Minimun Price Step"
-                          value={auction?.price_step}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Thời gian bắt đầu đăng kí</Form.Label>
-                        <Form.Control
-                          type="datetime-local"
-                          readOnly={auctionId}
-                          value={
-                            auction?.regitration_start_time
-                              ? auction.regitration_start_time.substring(0, 16)
-                              : ""
-                          }
-                        />
-                      </Form.Group>
+    <Container fluid style={{ backgroundColor: "white", padding: "20px" }}>
+      <div>
+        <Row>
+          {/* Phần nhỏ thứ nhất: Thông tin salon và thông tin chủ salon */}
+          <Col md={8}>
+            {/* Thông tin salon */}
+            <Card>
+              <Card.Img variant="top" src={salonDetail.img} />
+              <Card.Body>
+                <Card.Title>{salonDetail.name}</Card.Title>
+                <Card.Text>Địa chỉ: {salonDetail.address}</Card.Text>
+                <Card.Text>Mô tả: {salonDetail.description}</Card.Text>
+                <Card.Text>
+                  Đánh giá: {salonDetail.totalRating} (
+                  {salonDetail.totalReviewer} đánh giá)
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            {/* Thông tin chủ salon */}
+            <Card className="mt-3">
+              <Card.Body>
+                <Card.Title>Thông tin chủ salon</Card.Title>
+                <Card.Text>Tên: {salonDetail.salonOwner?.fullName}</Card.Text>
+                <Card.Text>Email: {salonDetail.salonOwner?.email}</Card.Text>
+                <Card.Text>
+                  Số điện thoại: {salonDetail.salonOwner?.phone}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
 
-                      <Form.Group className="mb-3">
-                        <Form.Label>Thời gian kết thúc đăng kí</Form.Label>
-                        <Form.Control
-                          type="datetime-local"
-                          readOnly={auctionId}
-                          value={
-                            auction?.regitration_end_time
-                              ? auction.regitration_end_time.substring(0, 16)
-                              : ""
-                          }
-                        />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3">
-                        <Form.Label>Thời gian bắt đầu</Form.Label>
-                        <Form.Control
-                          type="datetime-local"
-                          readOnly={auctionId}
-                          value={
-                            auction?.start_time
-                              ? auction.start_time.substring(0, 16)
-                              : ""
-                          }
-                        />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3">
-                        <Form.Label>Thời gian kết thúc</Form.Label>
-                        <Form.Control
-                          type="datetime-local"
-                          readOnly={auctionId}
-                          value={
-                            auction?.end_time
-                              ? auction.end_time.substring(0, 16)
-                              : ""
-                          }
-                        />
-                      </Form.Group>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col xs="auto" className="mt-2">
-                  <Button variant="success" onClick={() => navigate(-1)}>
-                    Back
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-    //       </CCardBody>
-    //     </CCard>
-    //   </CCol>
-    // </CRow>
+          {/* Phần nhỏ thứ hai: Lịch làm việc */}
+          <Col md={4}>
+            <h3>Lịch làm việc</h3>
+            {salonDetail.schedules?.map((schedule) => (
+              <Card key={schedule.id} className="mb-3">
+                <Card.Body>
+                  <Card.Title>{`Ngày làm việc: ${schedule.dayOfWeek}`}</Card.Title>
+                  <Card.Text>
+                    Giờ làm việc: Từ {schedule.startTime} đến {schedule.endTime}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            ))}
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <Row className="mt-4">
+          <h3>Dịch vụ của Salon</h3>
+          {currentServices.map((service) => (
+            <Col key={service.id} md={4} className="mb-4">
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src={service.img}
+                  style={{ maxHeight: "15rem" }}
+                />
+                <Card.Body>
+                  <Card.Title>{service.serviceName}</Card.Title>
+                  <Card.Text>Mô tả: {service.description}</Card.Text>
+                  <Card.Text>Giá: {service.price} VND</Card.Text>
+                  <Card.Text>Thời gian: {service.time} giờ</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {[
+            ...Array(Math.ceil(salonService.length / servicesPerPage)).keys(),
+          ].map((number) => (
+            <button
+              key={number}
+              onClick={() => paginateService(number + 1)}
+              style={{
+                border: "none",
+                margin: "0 5px", // Tạo khoảng cách giữa các nút
+                borderRadius: "5px",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              {number + 1}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div>
+        <Row className="mt-4">
+          <h3>Nhân viên salon</h3>
+          {currentEmployees.map((employee) => (
+            <Col key={employee.id} md={4} className="mb-4">
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src={employee.img}
+                  style={{ maxHeight: "15rem" }}
+                />
+                <Card.Body>
+                  <Card.Title>{employee.fullName}</Card.Title>
+                  <Card.Text>Giới tính: {employee.gender}</Card.Text>
+                  <Card.Text>Số điện thoại: {employee.phone}</Card.Text>
+                  <Card.Text>
+                    Lịch làm việc:
+                    <ul>
+                      {employee.schedules.map((schedule) => (
+                        <li
+                          key={schedule.id}
+                        >{`${schedule.dayOfWeek}: ${schedule.startTime} - ${schedule.endTime}`}</li>
+                      ))}
+                    </ul>
+                  </Card.Text>
+                  <Card.Text>
+                    Dịch vụ:
+                    <ul>
+                      {employee.serviceHairs.map((service) => (
+                        <li
+                          key={service.id}
+                        >{`${service.serviceName} - ${service.price} VND`}</li>
+                      ))}
+                    </ul>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {[
+            ...Array(Math.ceil(salonEmployee.length / employeesPerPage)).keys(),
+          ].map((number) => (
+            <button
+              key={number}
+              onClick={() => paginateEmployee(number + 1)}
+              style={{
+                border: "none",
+                margin: "0 5px", // Tạo khoảng cách giữa các nút
+                borderRadius: "5px",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              {number + 1}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2>Danh sách voucher</h2>
+        <Row>
+          {currentVouchers.map((voucher) => (
+            <Col key={voucher.id} md={4} className="mb-4">
+              {" "}
+              {/* Sử dụng md={4} để chia layout thành 3 cột trên màn hình lớn */}
+              <Card>
+                <Card.Body>
+                  <Card.Title>{voucher.code}</Card.Title>
+                  <Card.Text>Mô tả: {voucher.description}</Card.Text>
+                  <Card.Text>Giảm giá: {voucher.discountPercentage}%</Card.Text>
+                  <Card.Text>
+                    Giá trị đơn hàng tối thiểu:{" "}
+                    {voucher.minimumOrderAmount.toLocaleString()} VND
+                  </Card.Text>
+                  <Card.Text>
+                    Hạn sử dụng:{" "}
+                    {new Date(voucher.expiryDate).toLocaleDateString()}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        {[...Array(salonVoucher.totalPages).keys()].map((number) => (
+          <button
+            key={number}
+            onClick={() => paginateVoucher(number + 1)}
+            style={{
+              border: "none",
+              margin: "0 5px", // Tạo khoảng cách giữa các nút
+              borderRadius: "5px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
+            }}
+          >
+            {number + 1}
+          </button>
+        ))}
+      </div>
+      <div>
+        <Button variant="success" onClick={() => navigate(-1)}>
+          Back
+        </Button>
+      </div>
+    </Container>
   );
 };
 

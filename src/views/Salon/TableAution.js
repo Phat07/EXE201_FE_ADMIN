@@ -44,11 +44,8 @@ const CustomTable = ({ data = [], onUpdate, onDelete }) => {
         <CTableHead color="light">
           <CTableRow>
             <CTableHeaderCell>ID</CTableHeaderCell>
-            <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Host</CTableHeaderCell>
-            <CTableHeaderCell>Regitration</CTableHeaderCell>
-            <CTableHeaderCell>Start Time</CTableHeaderCell>
-            <CTableHeaderCell>End Time</CTableHeaderCell>
+            <CTableHeaderCell>Salon Name</CTableHeaderCell>
+            <CTableHeaderCell>Salon Owner</CTableHeaderCell>
             <CTableHeaderCell>Status</CTableHeaderCell>
             <CTableHeaderCell>Actions</CTableHeaderCell>
           </CTableRow>
@@ -58,13 +55,7 @@ const CustomTable = ({ data = [], onUpdate, onDelete }) => {
             <CTableRow key={index}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>{item?.name}</CTableDataCell>
-              <CTableDataCell>{item?.host_id?.fullName}</CTableDataCell>
-              <CTableDataCell>
-                {formatDate(item?.regitration_start_time)} -{" "}
-                {formatDate(item?.regitration_end_time)}
-              </CTableDataCell>
-              <CTableDataCell>{formatDate(item?.start_time)}</CTableDataCell>
-              <CTableDataCell>{formatDate(item?.end_time)}</CTableDataCell>
+              <CTableDataCell>{item?.salonOwner?.fullName}</CTableDataCell>
               <CTableDataCell>
                 <CBadge color="danger">{item?.status}</CBadge>
               </CTableDataCell>

@@ -47,14 +47,18 @@ const Login = () => {
         //   toast.error("Just Admin login to Website");
         //   return;
         // }
+        if (resFetchMe.data.adminResponse === null) {
+          alert("Tài khoản của bạn không thể đăng nhập vào hệ thống này");
+          return;
+        }
         const token = resFetchMe.data.accessToken;
-        const currentUser = resFetchMe.data.customerResponse;
+        const currentUser = resFetchMe.data.adminResponse;
         const role = resFetchMe.data.roleName;
         UserServices.fetchMe(token)
           .then((res) => {
             dispatch(actUserLogin(currentUser, token, role));
             toast.success(
-              `${resFetchMe.data.customerResponse.fullName} đã đăng nhập với role ${resFetchMe?.data?.roleName}. Chào mừng đã vào cổng`
+              `${resFetchMe.data.adminResponse.fullName} đã đăng nhập với role ${resFetchMe?.data?.roleName}. Chào mừng đã vào cổng`
             );
             navigate("/");
           })

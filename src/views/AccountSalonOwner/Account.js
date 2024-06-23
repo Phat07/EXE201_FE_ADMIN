@@ -1,25 +1,34 @@
 import React, { useEffect } from "react";
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CButton,
+} from "@coreui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ModalConfirmDelete from "./ModalConfirmDelete";
+// import ModalConfirmDelete from "./ModalConfirmDelete";
 import TableAccount from "./TableAccount";
-import { actAllUserGetAsync } from "src/store/user/action";
+import { actGetAllSalonOwner } from "src/store/user/action";
 import { useDispatch, useSelector } from "react-redux";
 // import DocsExample  from 'src/components/DocsExample'
 function Account() {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
-  const [userDeleteData] = useState({});
+  const [userDeleteData, setUserDeleteData] = useState({});
   const token = localStorage.getItem("ACCESS_TOKEN");
-  const allUser = useSelector((state) => state.USER.allUser);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const allSalon = useSelector((state) => state.USER.allSalon);
+  console.log("allCustomer", allSalon);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actAllUserGetAsync(token));
-  }, [dispatch, token]);
+    dispatch(actGetAllSalonOwner(currentPage, itemsPerPage));
+  }, [dispatch, currentPage, itemsPerPage]);
   const handleUpdate = (user) => {
-    navigate(`/update-user/${user._id}`);
-    // Thêm logic update tại đây
+    navigate(`/update-salon/${user.id}`);
   };
   return (
     <CRow>
@@ -48,17 +57,54 @@ function Account() {
               {/* </CCardBody> */}
             </p>
 
-            <TableAccount data={allUser} onUpdate={handleUpdate} />
+            <TableAccount data={allSalon?.items} onUpdate={handleUpdate} />
+            <div
+              className="d-flex justify-content-center"
+              style={{
+                marginTop: "20px",
+              }}
+            >
+              {currentPage > 1 && (
+                <CButton
+                  color="success"
+                  className="px-4"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                >
+                  Previos
+                </CButton>
+              )}
+              <p
+                className="text-medium-emphasis medium"
+                style={{
+                  marginLeft: "20px",
+                  marginRight: "20px",
+                  textAlign: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {allSalon.page}
+              </p>
+              {currentPage < allSalon?.totalPages && (
+                <CButton
+                  color="success"
+                  className="px-4"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                >
+                  Next
+                </CButton>
+              )}
+            </div>
           </CCardBody>
         </CCard>
       </CCol>
-      <ModalConfirmDelete
+      {/* <ModalConfirmDelete
         showProp={showDelete}
         handleClose={() => {
           setShowDelete(false);
         }}
         userDeleteData={userDeleteData}
-      />
+      /> */}
     </CRow>
   );
 }

@@ -18,6 +18,17 @@ export const UserServices = {
   GetCustomerById(id) {
     return API.get(`customers/GetUserById/${id}`);
   },
+  GetAllSalonOwner(page, size) {
+    return API.get(`salonowners/GetAllSalonOwner`, {
+      params: {
+        page,
+        size,
+      },
+    });
+  },
+  GetSalonOwnerById(id) {
+    return API.get(`salonowners/GetSalonOwnerById/${id}`);
+  },
   // getOneUser(id, token) {
   //   return API.get("/users//userid/:userid", id, {
   //     headers: {

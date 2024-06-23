@@ -34,9 +34,9 @@ function RouterContent() {
     } else {
       UserServices.fetchMe(token)
         .then((res) => {
-          if (res.data && res.data.customerResponse) {
-            const currentUser = res.data.customerResponse;
-            console.log(res.data.customerResponse);
+          if (res.data && res.data.adminResponse) {
+            const currentUser = res.data.adminResponse;
+            console.log(res.data.adminResponse);
             const role = res.data.roleName;
             dispatch(actUserLogin(currentUser, token, role));
           } else {

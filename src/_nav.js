@@ -7,6 +7,7 @@ import {
   cilWallet,
   cilChartLine,
   cilCast,
+  cilUserPlus,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CNavGroup, CNavItem } from "@coreui/react";
@@ -28,14 +29,14 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: "Account",
+    name: "Account Customer",
     // to: "/account",
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: "Account List",
-        to: "/account",
+        to: "/accountCustomer",
       },
       // {
       //   component: CNavItem,
@@ -44,21 +45,38 @@ const _nav = [
       // },
     ],
   },
-
+  {
+    component: CNavGroup,
+    name: "Account Salon",
+    // to: "/account",
+    icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: "Account List",
+        to: "/accountSalon",
+      },
+      // {
+      //   component: CNavItem,
+      //   name: "Ban User Request",
+      //   to: "/ban-request",
+      // },
+    ],
+  },
   // {
   //   component: CNavTitle,
   //   name: "Aution",
   // },
   {
     component: CNavGroup,
-    name: "Aution",
+    name: "Salon",
     // to: "/aution",
     icon: <CIcon icon={cilCast} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: "Aution",
-        to: "/aution",
+        name: "Salon",
+        to: "/Salon",
       },
     ],
   },
@@ -68,13 +86,13 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: "Product",
+    name: "Voucher",
     // to: "/buttons",
     icon: <CIcon icon={cilInbox} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: "Product",
+        name: "Voucher",
         to: "/product",
       },
     ],

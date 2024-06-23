@@ -7,16 +7,22 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
-  CRow,
   CBadge,
+  CRow,
 } from "@coreui/react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { format } from "date-fns";
 import PropTypes from "prop-types"; // Import PropTypes
 
-const TableProduct = (props) => {
-  const { data = [], onUpdate, onDelete } = props;
+const CustomTable = ({ data = [], onUpdate, onDelete }) => {
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return format(date, "dd/MM/yyyy - HH:mm");
+  };
+  console.log("Data in table auction: ", data);
   return (
     <CRow>
       <Col xs="auto">
@@ -40,22 +46,27 @@ const TableProduct = (props) => {
             <CTableHeaderCell>ID</CTableHeaderCell>
             <CTableHeaderCell>Name</CTableHeaderCell>
             <CTableHeaderCell>Host</CTableHeaderCell>
-            <CTableHeaderCell>status</CTableHeaderCell>
+            <CTableHeaderCell>Regitration</CTableHeaderCell>
+            <CTableHeaderCell>Start Time</CTableHeaderCell>
+            <CTableHeaderCell>End Time</CTableHeaderCell>
+            <CTableHeaderCell>Status</CTableHeaderCell>
             <CTableHeaderCell>Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <CTableRow key={index}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>{item?.name}</CTableDataCell>
               <CTableDataCell>{item?.host_id?.fullName}</CTableDataCell>
               <CTableDataCell>
-                {item?.status === false ? (
-                  <CBadge color="danger">Not Auction</CBadge>
-                ) : (
-                  <CBadge color="success"> Auction</CBadge>
-                )}
+                {formatDate(item?.regitration_start_time)} -{" "}
+                {formatDate(item?.regitration_end_time)}
+              </CTableDataCell>
+              <CTableDataCell>{formatDate(item?.start_time)}</CTableDataCell>
+              <CTableDataCell>{formatDate(item?.end_time)}</CTableDataCell>
+              <CTableDataCell>
+                <CBadge color="danger">{item?.status}</CBadge>
               </CTableDataCell>
               <CTableDataCell>
                 {onUpdate && (
@@ -77,19 +88,16 @@ const TableProduct = (props) => {
   );
 };
 
-TableProduct.propTypes = {
+CustomTable.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      avatar: PropTypes.string, // Assuming avatar, registered, role, and status are optional
-      registered: PropTypes.string,
-      role: PropTypes.string,
-      status: PropTypes.bool,
+      status: PropTypes.string, // Giả sử rằng status cũng là một phần của data object
     })
-  ),
-  onUpdate: PropTypes.func,
-  onDelete: PropTypes.func,
+  ), // Không còn là isRequired
+  onUpdate: PropTypes.func, // Không bắt buộc
+  onDelete: PropTypes.func, // Không bắt buộc
 };
 
-export default TableProduct;
+export default CustomTable;

@@ -3,21 +3,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Card, Row, Col, Button, Form, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { actProductGetAsync } from "../../store/product/action";
+import { getVoucherById } from "src/store/voucher/action";
 const ProductDetail = () => {
   const { productId } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate();
-  const products = useSelector((state) => state.PRODUCT.products);
-  console.log("Product: ", products);
+  // const products = useSelector((state) => state.PRODUCT.products);
+  const Detailvoucher = useSelector((state) => state.VOUCHER.Detailvoucher);
+  console.log("Detailvoucher", Detailvoucher);
   const token = localStorage.getItem("ACCESS_TOKEN");
   const dispatch = useDispatch();
   const [product, setProduct] = useState("");
   useEffect(() => {
-    dispatch(actProductGetAsync(token));
-  }, [dispatch, productId, token]);
-  useEffect(() => {
-    const item = products.find((i) => i._id === productId);
-    setProduct(item);
-  }, [productId, products]);
+    dispatch(getVoucherById(productId));
+  }, [dispatch, productId]);
+  // useEffect(() => {
+  //   const item = products.find((i) => i._id === productId);
+  //   setProduct(item);
+  // }, [productId, products]);
   console.log("ProductDetail: ", product);
   return (
     <Row>

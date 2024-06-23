@@ -28,7 +28,7 @@ function Account() {
     dispatch(actGetAllCustomer(currentPage, itemsPerPage));
   }, [dispatch, currentPage, itemsPerPage]);
   const handleUpdate = (user) => {
-    navigate(`/update-user/${user.id}`);
+    navigate(`/update-customer/${user.id}`);
   };
   return (
     <CRow>

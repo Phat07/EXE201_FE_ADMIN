@@ -7,22 +7,24 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
-  CBadge,
   CRow,
+  CBadge,
 } from "@coreui/react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { format } from "date-fns";
 import PropTypes from "prop-types"; // Import PropTypes
 
-const CustomTable = ({ data = [], onUpdate, onDelete }) => {
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return format(date, "dd/MM/yyyy - HH:mm");
+const TableProduct = (props) => {
+  const { data = [], onUpdate, onDelete } = props;
+  const dateModify = (date) => {
+    if (date) {
+      const [datePart, timePart] = date?.split("T");
+      const timeWithoutSeconds = timePart?.split(":").slice(0, 2).join(":");
+      return `${datePart} - ${timeWithoutSeconds}`;
+    }
   };
-  console.log("Data in table auction: ", data);
+
   return (
     <CRow>
       <Col xs="auto">
@@ -45,11 +47,11 @@ const CustomTable = ({ data = [], onUpdate, onDelete }) => {
           <CTableRow>
             <CTableHeaderCell>ID</CTableHeaderCell>
             <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Host</CTableHeaderCell>
-            <CTableHeaderCell>Regitration</CTableHeaderCell>
-            <CTableHeaderCell>Start Time</CTableHeaderCell>
-            <CTableHeaderCell>End Time</CTableHeaderCell>
-            <CTableHeaderCell>Status</CTableHeaderCell>
+            <CTableHeaderCell>Description</CTableHeaderCell>
+            <CTableHeaderCell>Created Date</CTableHeaderCell>
+            <CTableHeaderCell>Modified Date</CTableHeaderCell>
+            <CTableHeaderCell>Expiry Date</CTableHeaderCell>
+            <CTableHeaderCell>status</CTableHeaderCell>
             <CTableHeaderCell>Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -57,16 +59,17 @@ const CustomTable = ({ data = [], onUpdate, onDelete }) => {
           {data.map((item, index) => (
             <CTableRow key={index}>
               <CTableDataCell>{index + 1}</CTableDataCell>
-              <CTableDataCell>{item?.product_id?.name}</CTableDataCell>
-              <CTableDataCell>{item?.host_id?.fullName}</CTableDataCell>
+              <CTableDataCell>{item?.code}</CTableDataCell>
+              <CTableDataCell>{item?.description}</CTableDataCell>
+              <CTableDataCell>{dateModify(item?.createdDate)}</CTableDataCell>
+              <CTableDataCell>{dateModify(item?.modifiedDate)}</CTableDataCell>
+              <CTableDataCell>{dateModify(item?.expiryDate)}</CTableDataCell>
               <CTableDataCell>
-                {formatDate(item?.regitration_start_time)} -{" "}
-                {formatDate(item?.regitration_end_time)}
-              </CTableDataCell>
-              <CTableDataCell>{formatDate(item?.start_time)}</CTableDataCell>
-              <CTableDataCell>{formatDate(item?.end_time)}</CTableDataCell>
-              <CTableDataCell>
-                <CBadge color="danger">{item?.status}</CBadge>
+                {item?.isActive === false ? (
+                  <CBadge color="danger">Not public</CBadge>
+                ) : (
+                  <CBadge color="success">Public</CBadge>
+                )}
               </CTableDataCell>
               <CTableDataCell>
                 {onUpdate && (
@@ -88,16 +91,19 @@ const CustomTable = ({ data = [], onUpdate, onDelete }) => {
   );
 };
 
-CustomTable.propTypes = {
+TableProduct.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-      status: PropTypes.string, // Giả sử rằng status cũng là một phần của data object
+      avatar: PropTypes.string, // Assuming avatar, registered, role, and status are optional
+      registered: PropTypes.string,
+      role: PropTypes.string,
+      status: PropTypes.bool,
     })
-  ), // Không còn là isRequired
-  onUpdate: PropTypes.func, // Không bắt buộc
-  onDelete: PropTypes.func, // Không bắt buộc
+  ),
+  onUpdate: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
-export default CustomTable;
+export default TableProduct;

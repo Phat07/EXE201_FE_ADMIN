@@ -3,6 +3,8 @@ import {
   ACT_USER_NOT_FETCH_ME,
   ALL_CUSTOMER,
   GET_CUSTOMER_ID,
+  ALL_SALON,
+  GET_SALON_ID,
 } from "./action";
 
 const initialState = {
@@ -12,6 +14,8 @@ const initialState = {
   currentUser: null,
   allCustomer: [],
   detailCustomer: null,
+  allSalon: [],
+  detailSalon: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,6 +43,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         detailCustomer: action.payload,
+      };
+    case ALL_SALON:
+      return {
+        ...state,
+        allSalon: action.payload,
+      };
+    case GET_SALON_ID:
+      return {
+        ...state,
+        detailSalon: action.payload,
       };
     default:
       return state;

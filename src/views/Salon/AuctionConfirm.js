@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
-import TableAution from "src/views/Aution/TableAution";
+import TableAution from "src/views/Salon/TableAution";
 import { useNavigate } from "react-router-dom";
 function Aution() {
   const [data2, setData2] = useState([
@@ -21,11 +21,11 @@ function Aution() {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Aution</strong>
+            <strong>Salon</strong>
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Hiện thị các đấu giá có trong hệ thống
+              Hiện thị các Salon có trong hệ thống
             </p>
             <TableAution data={data2} onUpdate={handleUpdateUser} />
           </CCardBody>

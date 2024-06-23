@@ -14,37 +14,52 @@ import {
   actAuctionGetAsync,
   actGetAllMemberJoinAuctionRoomGetAsync,
 } from "../../store/auction/action";
+import { fetchSalonInformationById } from "src/store/salon/action";
 const AutionDetail = () => {
   const { auctionId } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate();
-  const auctions = useSelector((state) => state.AUCTION.auctions);
-  console.log("aucctionsss", auctions);
-  const allMemberJoinInAuction = useSelector(
-    (state) => state.AUCTION.allMemberJoinInAuction
+  // const auctions = useSelector((state) => state.AUCTION.auctions);
+  // console.log("aucctionsss", auctions);
+  // const allMemberJoinInAuction = useSelector(
+  //   (state) => state.AUCTION.allMemberJoinInAuction
+  // );
+  // const filterNumberMemberJoinRoom = allMemberJoinInAuction?.filter(
+  //   (e) => e?.member_id?.role_id?.title !== "HOST"
+  // );
+  const { salonService, salonDetail, salonEmployee, voucher } = useSelector(
+    (state) => state.SALON
   );
-  const filterNumberMemberJoinRoom = allMemberJoinInAuction?.filter(
-    (e) => e?.member_id?.role_id?.title !== "HOST"
-  );
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  console.log("salonService", salonService);
+  console.log("salonDetail", salonDetail);
+  console.log("salonEmployee", salonEmployee);
+  console.log("voucher", voucher);
+  // const token = localStorage.getItem("ACCESS_TOKEN");
   const dispatch = useDispatch();
   const [auction, setAuction] = useState("");
+  // useEffect(() => {
+  //   dispatch(actAuctionGetAsync(token));
+  //   dispatch(actGetAllMemberJoinAuctionRoomGetAsync(auctionId, token));
+  // }, [auctionId, dispatch, token]);
   useEffect(() => {
-    dispatch(actAuctionGetAsync(token));
-    dispatch(actGetAllMemberJoinAuctionRoomGetAsync(auctionId, token));
-  }, [auctionId, dispatch, token]);
-  useEffect(() => {
-    const item = auctions.find((i) => i._id === auctionId);
-    setAuction(item);
-  }, [auctions, auctionId]);
-  console.log("auctionDetail", auction);
-  function formatCurrencyVND(amount) {
-    // Sử dụng hàm toLocaleString() để định dạng số
-    // Cài đặt style là 'currency' và currency là 'VND'
-    return amount?.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  }
+    async function fetchData() {
+      dispatch(fetchSalonInformationById(auctionId));
+      // dispatch(fetchSalonEmployeeBySalonInformationId(product));
+      // dispatch(fetchServiceHairBySalonInformationId(product));
+    }
+
+    fetchData();
+  }, []);
+  // useEffect(() => {
+  //   const item = auctions.find((i) => i._id === auctionId);
+  //   setAuction(item);
+  // }, [auctions, auctionId]);
+  // console.log("auctionDetail", auction);
+  // function formatCurrencyVND(amount) {
+  //   return amount?.toLocaleString("vi-VN", {
+  //     style: "currency",
+  //     currency: "VND",
+  //   });
+  // }
   return (
     // <CRow>
     //   <CCol xs={12}>
@@ -54,7 +69,7 @@ const AutionDetail = () => {
       <Col xs={12}>
         <Card className="mb-4">
           <Card.Header>
-            <strong>Thông tin chi tiết buổi đấu giá </strong>
+            <strong>Thông tin chi tiết Salon </strong>
           </Card.Header>
           <Card.Body>
             <Form>
@@ -139,7 +154,7 @@ const AutionDetail = () => {
                         <Form.Control
                           placeholder="Giá khởi điểm"
                           readOnly={auctionId}
-                          value={formatCurrencyVND(auction?.starting_price)}
+                          value={auction?.starting_price}
                         />
                       </Form.Group>
                     </Card.Body>
@@ -148,9 +163,7 @@ const AutionDetail = () => {
                     <Card.Body>
                       <Card.Title>Số lượng người tham gia đấu giá</Card.Title>
                       <Form.Group className="mb-3">
-                        <Form.Label>
-                          Số lượng: {filterNumberMemberJoinRoom.length}
-                        </Form.Label>
+                        <Form.Label>Số lượng:</Form.Label>
                       </Form.Group>
                     </Card.Body>
                   </Card>
@@ -174,7 +187,7 @@ const AutionDetail = () => {
                         <Form.Control
                           readOnly={auctionId}
                           placeholder="Minimun Price Step"
-                          value={formatCurrencyVND(auction?.price_step)}
+                          value={auction?.price_step}
                         />
                       </Form.Group>
                       <Form.Group className="mb-3">

@@ -42,7 +42,7 @@ const TableAccount = (props) => {
         </CTableRow>
       </CTableHead>
       <CTableBody>
-        {data.map((item, index) => {
+        {data?.map((item, index) => {
           // Kiểm tra nếu item không phải là "ADMIN" hoặc là "ADMIN" nhưng là user hiện tại
           // const isVisible = item.role_id.title !== "ADMIN";
 

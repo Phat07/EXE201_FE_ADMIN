@@ -66,6 +66,8 @@ const CustomTable = ({
     setContent("");
     setVisible(false);
   };
+  console.log("data: ", data);
+
 
   return (
     <>

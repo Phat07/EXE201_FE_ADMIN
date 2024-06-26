@@ -7,6 +7,7 @@ const AccountSalon = React.lazy(() =>
   import("./views/AccountSalonOwner/Account")
 );
 const Salon = React.lazy(() => import("./views/Salon/Salon"));
+const Report = React.lazy(() => import("./views/Report/Report"));
 const Voucher = React.lazy(() => import("./views/Voucher/Voucher"));
 const CreateVoucher = React.lazy(() => import("./views/Voucher/CreateVoucher"));
 const ProductDetail = React.lazy(() => import("./views/Voucher/VoucherDetail"));
@@ -64,6 +65,13 @@ const routes = [
     element: SalonDetail,
     exact: true,
   },
+  { path: "/Report", name: "Report", element: Report, exact: true },
+  // {
+  //   path: "/Report-detail/:auctionId",
+  //   name: "Report Detail",
+  //   element: ReportDetail,
+  //   exact: true,
+  // },
   {
     path: "/aution-confirm",
     name: "Aution",

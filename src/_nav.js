@@ -8,6 +8,7 @@ import {
   cilChartLine,
   cilCast,
   cilUserPlus,
+  cilReportSlash,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CNavGroup, CNavItem } from "@coreui/react";
@@ -77,6 +78,19 @@ const _nav = [
         component: CNavItem,
         name: "Salon",
         to: "/Salon",
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: "Report",
+    // to: "/aution",
+    icon: <CIcon icon={cilReportSlash} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: "Report",
+        to: "/Report",
       },
     ],
   },

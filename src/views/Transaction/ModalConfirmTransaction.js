@@ -4,11 +4,11 @@ import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { actRequestConfirmAsync } from "../../store/wallet/action";
-import {
-  actRequestGetMoneyPaidAsync,
-  actRequestGetMoneyUnpaidAsync,
-} from "src/store/request/action";
+// import { actRequestConfirmAsync } from "../../store/wallet/action";
+// import {
+//   actRequestGetMoneyPaidAsync,
+//   actRequestGetMoneyUnpaidAsync,
+// } from "src/store/request/action";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import CurrencyFormat from "react-currency-format";
@@ -39,19 +39,15 @@ const ModalConfirmTransaction = (props) => {
     console.log("Money Add: ", moneyToAdd);
     // try {
     // Giả sử dispatch sẽ trả về Promise
-    dispatch(actRequestConfirmAsync(data, token));
-    dispatch(actRequestGetMoneyPaidAsync(token));
-    dispatch(actRequestGetMoneyUnpaidAsync(token));
+    // dispatch(actRequestConfirmAsync(data, token));
+    // dispatch(actRequestGetMoneyPaidAsync(token));
+    // dispatch(actRequestGetMoneyUnpaidAsync(token));
     toast.success(
       `Bạn đã add ${moneyToAdd} vào tài khoản ${confirmData.user_id.fullName} `
     );
     setMoneyToAdd();
     setNote("Cảm ơn quý khách");
     handleClose();
-    // } catch (error) {
-    //   // Xử lý lỗi nếu có
-    //   toast.error("Có lỗi xảy ra, vui lòng thử lại!");
-    // }
   };
 
   return (

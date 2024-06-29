@@ -6,10 +6,10 @@ import TableTrannsacton from "./TableTransaction";
 import ChangeTabTransaction from "./ChangeTabTransaction";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actRequestGetMoneyPaidAsync,
-  actRequestGetMoneyUnpaidAsync,
-} from "src/store/request/action";
+// import {
+//   actRequestGetMoneyPaidAsync,
+//   actRequestGetMoneyUnpaidAsync,
+// } from "src/store/request/action";
 import { toast } from "react-toastify";
 
 function TransactionRequest() {
@@ -25,8 +25,8 @@ function TransactionRequest() {
   // console.log("request UnPaid: ", requestUnpaid);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actRequestGetMoneyPaidAsync(token));
-    dispatch(actRequestGetMoneyUnpaidAsync(token));
+    // dispatch(actRequestGetMoneyPaidAsync(token));
+    // dispatch(actRequestGetMoneyUnpaidAsync(token));
   }, []);
   // const handleDelete = (transaction) => {
   //   console.log("Delete item with id:", transaction);

@@ -55,7 +55,8 @@ const ChangeTabAution = (props) => {
     setCurrentPage(1);
     setItemsPerPage(10);
   };
-
+  console.log("1", currentPage);
+  console.log("2", salonInformation.totalPages);
   // Xác định nội dung để hiển thị dựa trên tab đang được chọn
   let contentToDisplay;
   switch (activeTab) {
@@ -100,7 +101,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -153,7 +154,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -206,7 +207,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -259,7 +260,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -312,7 +313,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -365,7 +366,7 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -418,13 +419,14 @@ const ChangeTabAution = (props) => {
             </p>
             {/* {currentPage < salonInformation?.totalPages && ( */}
             <CButton
-              disabled={currentPage === salonInformation?.totalPages}
+              disabled={currentPage >= salonInformation.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
             >
               Next
             </CButton>
+
             {/* )} */}
           </div>
         </div>

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSalonInformation } from "src/store/salon/action";
 import TableReport from "src/views/Report/TableReport";
+import { GetAllReportByRoleName } from "src/store/request/action";
 const ChangeTabReport = (props) => {
   const {} = props;
   const token = localStorage.getItem("ACCESS_TOKEN");
@@ -97,11 +98,16 @@ const ChangeTabReport = (props) => {
   };
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [activeTab, setActiveTab] = useState("REPORT FROM CUSTOMER");
+  const [activeTab, setActiveTab] = useState("CUSTOMER");
+  const reportByRole = useSelector((state) => state.REQUEST.reportByRole);
   console.log(activeTab);
-  useEffect(() => {}, [activeTab, currentPage, itemsPerPage]);
-  const navigate = useNavigate();
+  console.log(reportByRole);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetAllReportByRoleName(activeTab, currentPage, itemsPerPage));
+  }, [activeTab, currentPage, dispatch, itemsPerPage]);
 
+  const navigate = useNavigate();
   const filterByStatus = (status) => {
     return reportInformation?.items?.filter((salon) => salon.status === status);
   };
@@ -230,7 +236,7 @@ const ChangeTabReport = (props) => {
         <CNavItem>
           <CNavLink
             active={activeTab === "REPORT FROM CUSTOMER"}
-            onClick={() => changeTab("REPORT FROM CUSTOMER")}
+            onClick={() => changeTab("Customer")}
           >
             <CIcon icon={cilMediaPlay} className="me-2" />
             REPORT FROM CUSTOMER
@@ -239,7 +245,7 @@ const ChangeTabReport = (props) => {
         <CNavItem>
           <CNavLink
             active={activeTab === "REPORT FROM SALON OWNER"}
-            onClick={() => changeTab("REPORT FROM SALON OWNER")}
+            onClick={() => changeTab("Salonowner")}
           >
             <CIcon icon={cilMediaPlay} className="me-2" />
             REPORT FROM SALON OWNER

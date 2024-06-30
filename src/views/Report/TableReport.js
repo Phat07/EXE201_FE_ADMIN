@@ -8,6 +8,7 @@ import {
   CTableRow,
   CButton,
   CRow,
+  CBadge,
 } from "@coreui/react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -43,6 +44,7 @@ const CustomTable = ({ data = [], onUpdate, currentPage, itemsPerPage }) => {
               <CTableHeaderCell>Salon Owner Name</CTableHeaderCell>
               <CTableHeaderCell>Create Time</CTableHeaderCell>
               <CTableHeaderCell>Confirm Time</CTableHeaderCell>
+              <CTableHeaderCell>Status</CTableHeaderCell>
               <CTableHeaderCell>Actions</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
@@ -50,13 +52,11 @@ const CustomTable = ({ data = [], onUpdate, currentPage, itemsPerPage }) => {
             {data?.map((item, index) => (
               <CTableRow key={index}>
                 <CTableDataCell>{index + 1}</CTableDataCell>
+                <CTableDataCell>{item?.salonInformation?.name}</CTableDataCell>
+                <CTableDataCell>{item?.customer?.fullName}</CTableDataCell>
                 <CTableDataCell>
-                  {item?.salonInformation?.name}
+                  {item?.salonInformation?.salonOwner?.fullName}
                 </CTableDataCell>
-                <CTableDataCell>
-                  {item?.customer?.fullName}
-                </CTableDataCell>
-                <CTableDataCell>{item?.salonInformation?.salonOwner?.fullName}</CTableDataCell>
                 <CTableDataCell>
                   {format(new Date(item?.createDate), "dd/MM/yyyy - hh:mm aa")}
                 </CTableDataCell>
@@ -67,6 +67,9 @@ const CustomTable = ({ data = [], onUpdate, currentPage, itemsPerPage }) => {
                         "dd/MM/yyyy - hh:mm aa"
                       )
                     : "Chưa xác nhận"}
+                </CTableDataCell>
+                <CTableDataCell>
+                  <CBadge color="danger">{item?.status}</CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
                   {onUpdate && (

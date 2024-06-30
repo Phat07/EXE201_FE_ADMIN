@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { ReportRequestServices } from "../../services/reportRequest";
 
 export const REPORT_BY_STATUS = "REPORT_BY_STATUS";
@@ -62,6 +63,20 @@ export function GetReportBySalonId(salonId, page, size) {
       dispatch(reportBySalon(response.data)); // Giả sử response.data là danh sách salon
     } catch (error) {
       console.error("Failed to fetch GetReportByCustomerId:", error);
+    }
+  };
+}
+export function ConfirmReport(id, data) {
+  return async (dispatch) => {
+    try {
+      const response = await ReportRequestServices.ConfirmReport(id, data);
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Cập nhật thành công");
+      } else {
+        console.log("ConfirmReport fail");
+      }
+    } catch (error) {
+      console.error("Failed to fetch ConfirmReport:", error);
     }
   };
 }

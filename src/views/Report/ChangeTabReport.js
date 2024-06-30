@@ -159,7 +159,7 @@ const ChangeTabReport = (props) => {
       <CNav variant="tabs">
         <CNavItem>
           <CNavLink
-            active={activeTab === "REPORT FROM CUSTOMER"}
+            active={activeTab === "Customer"}
             onClick={() => changeTab("Customer")}
           >
             <CIcon icon={cilMediaPlay} className="me-2" />
@@ -168,7 +168,7 @@ const ChangeTabReport = (props) => {
         </CNavItem>
         <CNavItem>
           <CNavLink
-            active={activeTab === "REPORT FROM SALON OWNER"}
+            active={activeTab === "Salonowner"}
             onClick={() => changeTab("Salonowner")}
           >
             <CIcon icon={cilMediaPlay} className="me-2" />

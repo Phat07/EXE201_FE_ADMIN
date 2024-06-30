@@ -26,4 +26,7 @@ export const ReportRequestServices = {
       },
     });
   },
+  ConfirmReport(id, data) {
+    return API.put(`reports/ConfirmReport/${id}`, data);
+  },
 };

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  Button,
   Card,
   CardBody,
   Col,
@@ -8,18 +9,34 @@ import {
   Row,
 } from "react-bootstrap";
 import { format } from "date-fns";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import ModalConfirmReport from "./ModalConfirmReport";
 
 const DetailReport = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const reportDetail = location.state?.reportDetail;
-  console.log("reportDetail", reportDetail);
+  const [visible, setVisible] = useState(false);
 
   return (
     <Container fluid style={{ backgroundColor: "white", padding: "20px" }}>
+      <div style={{ marginBottom: "10px" }}>
+        <Button variant="success" onClick={() => navigate(-1)}>
+          Back
+        </Button>
+        {reportDetail.status === "PENDING" && (
+          <Button
+            variant="warning"
+            onClick={() => setVisible(true)}
+            style={{ marginLeft: "10px" }}
+          >
+            Confirm Report
+          </Button>
+        )}
+      </div>
       <Row>
         {/* Phần hiển thị thông tin Salon */}
-        <Col md={4}>
+        <Col md={6}>
           <Card>
             <Card.Header>Thông Tin Salon</Card.Header>
             <Card.Img variant="top" src={reportDetail?.salonInformation?.img} />
@@ -40,7 +57,7 @@ const DetailReport = () => {
         </Col>
 
         {/* Phần hiển thị lịch */}
-        <Col md={4}>
+        {/* <Col md={4}>
           <Card className="mb-3">
             <Card.Header>Lịch Làm Việc</Card.Header>
             <ListGroup variant="flush">
@@ -52,14 +69,20 @@ const DetailReport = () => {
               ))}
             </ListGroup>
           </Card>
-        </Col>
+        </Col> */}
 
         {/* Phần hiển thị báo cáo */}
-        <Col md={4}>
+        <Col md={6}>
           <Card className="mb-3">
             <Card.Header>Báo cáo</Card.Header>
             <CardBody>
               <Card.Text>Lý do báo cáo: {reportDetail?.reasonReport}</Card.Text>
+              <Card.Text>Trạng thái: {reportDetail?.status}</Card.Text>
+              {reportDetail.status !== "PENDING" && (
+                <Card.Text>
+                  Phản hồi từ admin: {reportDetail?.descriptionAdmin}
+                </Card.Text>
+              )}
               <Card.Text>
                 Hình ảnh báo cáo:
                 <ListGroup variant="flush">
@@ -134,8 +157,8 @@ const DetailReport = () => {
                             {format(
                               new Date(detail.startTime),
                               "dd/MM/yyyy - hh:mm aa"
-                            )}
-                            {" "}đến{" "}
+                            )}{" "}
+                            đến{" "}
                             {format(
                               new Date(detail.endTime),
                               "dd/MM/yyyy - hh:mm aa"
@@ -196,6 +219,11 @@ const DetailReport = () => {
           </Row>
         </Col>
       </Row>
+      <ModalConfirmReport
+        OnClose={() => setVisible(false)}
+        isVisible={visible}
+        id={reportDetail.id}
+      />
     </Container>
   );
 };

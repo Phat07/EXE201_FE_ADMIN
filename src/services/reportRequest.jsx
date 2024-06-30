@@ -10,4 +10,20 @@ export const ReportRequestServices = {
       },
     });
   },
+  GetReportByCustomerId(customerId, page, size) {
+    return API.get(`reports/GetReportByCustomerId/${customerId}`, {
+      params: {
+        page,
+        size,
+      },
+    });
+  },
+  GetReportBySalonId(salonId, page, size) {
+    return API.get(`reports/GetReportBySalonId/${salonId}`, {
+      params: {
+        page,
+        size,
+      },
+    });
+  },
 };

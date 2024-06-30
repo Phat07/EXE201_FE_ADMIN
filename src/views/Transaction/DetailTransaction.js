@@ -20,46 +20,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { actGetAllCustomer, actGetCustomerById } from "src/store/user/action";
-import { GetReportByCustomerId } from "src/store/request/action";
-const DetailUser = () => {
-  const { userId } = useParams(); // Lấy ID từ URL
+const DetailTransaction = () => {
+  const { paymentId } = useParams(); // Lấy ID từ URL
+  const allPayments = useSelector((state) => state.PAYMENT.allPayments);
   const navigate = useNavigate();
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return format(date, "dd/MM/yyyy - HH:mm");
-  };
-  function formatCurrencyVND(amount) {
-    // Sử dụng hàm toLocaleString() để định dạng số
-    // Cài đặt style là 'currency' và currency là 'VND'
-    return amount?.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  }
-  const [data, setData] = useState([]);
-  const [userEditData, setUserEditData] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const token = localStorage.getItem("ACCESS_TOKEN");
-  // const allUser = useSelector((state) => state.USER.allUser);
-  const detailCustomer = useSelector((state) => state.USER.detailCustomer);
-  const reportByCustomer = useSelector(
-    (state) => state.REQUEST.reportByCustomer
-  );
-  console.log("detailCustomer", detailCustomer);
-  console.log("reportByCustomer", reportByCustomer);
   const dispatch = useDispatch();
+  const [detailPayment, setdetailPayment] = useState();
+
   useEffect(() => {
-    dispatch(actGetCustomerById(userId));
-    // dispatch(GetReportByCustomerId(userId, currentPage, itemsPerPage));
-  }, [dispatch, userId]);
-  useEffect(() => {
-    dispatch(GetReportByCustomerId(userId, currentPage, itemsPerPage));
-  }, [dispatch, userId, currentPage, itemsPerPage]);
-  const [showDelete, setShowDelete] = useState(false);
-  const [deleteData, setDeleteData] = useState({});
-  console.log("Item data ", userEditData);
+    const item = allPayments?.items?.find((i) => i.id === paymentId);
+    setdetailPayment(item);
+  }, [allPayments, paymentId]);
+
+  //cái này bỏ khi làm UI
+  const detailCustomer = useSelector((state) => state.USER.detailCustomer);
+
   return (
     <CRow>
       <CCol xs={6}>
@@ -93,7 +68,7 @@ const DetailUser = () => {
                   </div>
                   <Card.Body>
                     <Card.Title>
-                      User Name: {detailCustomer?.fullName}
+                      paymentCode: {detailPayment?.paymentCode}
                     </Card.Title>
                     <Card.Text>{detailCustomer?.email}</Card.Text>
                   </Card.Body>
@@ -133,4 +108,4 @@ const DetailUser = () => {
   );
 };
 
-export default DetailUser;
+export default DetailTransaction;

@@ -80,7 +80,7 @@ const TableTrannsacton = ({ data = [], onConfirm, onDelete }) => {
             {showPaid && <CTableHeaderCell>Date Confirm</CTableHeaderCell>}
             {showPaid && <CTableHeaderCell>Note</CTableHeaderCell>}
             <CTableHeaderCell>Status</CTableHeaderCell>
-            {showUnPaid && <CTableHeaderCell>Actions</CTableHeaderCell>}
+            <CTableHeaderCell>Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -108,19 +108,23 @@ const TableTrannsacton = ({ data = [], onConfirm, onDelete }) => {
                   <CBadge color="success">Paid</CBadge>
                 )}
               </CTableDataCell>
-              {onConfirm && (
+              {/* {onConfirm && (
                 <CTableDataCell>
                   <CButton color="success" onClick={() => onConfirm(item)}>
                     Confirm
                   </CButton>
-
-                  {/* {onDelete && (
-                  <CButton color="danger" onClick={() => onDelete(item)}>
-                    Delete
-                  </CButton>
-                )} */}
+                  {onDelete && (
+                    <CButton color="danger" onClick={() => onDelete(item)}>
+                      Delete
+                    </CButton>
+                  )}
                 </CTableDataCell>
-              )}
+              )} */}
+              <CTableDataCell>
+                <CButton color="success" onClick={() => onConfirm(item)}>
+                  Detail
+                </CButton>
+              </CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>

@@ -19,26 +19,33 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSalonInformationById } from "src/store/salon/action";
+import { GetReportBySalonId } from "src/store/request/action";
 const AutionDetail = () => {
   const { auctionId } = useParams();
   const navigate = useNavigate();
 
   const { salonService, salonDetail, salonEmployee, salonVoucher } =
     useSelector((state) => state.SALON);
+  const reportBySalon = useSelector((state) => state.REQUEST.reportBySalon);
   console.log("salonService", salonService);
   console.log("salonDetail", salonDetail);
   console.log("salonEmployee", salonEmployee);
   console.log("voucher", salonVoucher);
+  console.log("reportBySalon", reportBySalon);
   const dispatch = useDispatch();
   const [auction, setAuction] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   useEffect(() => {
     async function fetchData() {
       dispatch(fetchSalonInformationById(auctionId));
     }
-
     fetchData();
-  }, []);
+  }, [auctionId]);
+
+  useEffect(() => {
+    dispatch(GetReportBySalonId(auctionId, currentPage, itemsPerPage));
+  }, [dispatch, auctionId, currentPage, itemsPerPage]);
 
   const [currentPageService, setCurrentPageService] = useState(1);
   const [servicesPerPage] = useState(3); // Giả sử 6 dịch vụ trên mỗi trang

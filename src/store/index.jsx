@@ -9,6 +9,7 @@ import configReducer from "./config/reducer";
 import sidebarReducer from "./sidebarReducer";
 import salonReducer from "./salon/reducer";
 import voucherServiceReducer from "./voucher/reducer";
+import paymentReducer from "./payment/reducer";
 const rootReducer = combineReducers({
   USER: userReducer,
   SALON: salonReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   WALLET: walletReducer,
   CONFIG: configReducer,
   VOUCHER: voucherServiceReducer,
+  PAYMENT: paymentReducer,
   sidebar: sidebarReducer,
 });
 

@@ -1,6 +1,7 @@
 import {
   ACT_SALON_INFORMATION,
   ACT_SALON_INFORMATION_BY_ID,
+  ACT_SALON_INFORMATION_BY_OWNER_ID,
   GET_SALON_EMPPLOYEE_BY_SALON_ID,
   GET_SALON_SERVICE_BY_SALON_ID,
   SEARCH_SALON_INFORMATION,
@@ -24,6 +25,11 @@ const reducer = (state = initialState, action) => {
         allSalon: action.payload,
       };
     case ACT_SALON_INFORMATION_BY_ID:
+      return {
+        ...state,
+        salonDetail: action.payload,
+      };
+    case ACT_SALON_INFORMATION_BY_OWNER_ID:
       return {
         ...state,
         salonDetail: action.payload,

@@ -20,6 +20,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { actGetSalonOwnerById } from "src/store/user/action";
+import { GetReportBySalonId } from "src/store/request/action";
+import { GetSalonInformationByOwnerId } from "src/store/salon/action";
+import { GetPaymentBySalonId } from "src/store/payment/action";
 const DetailUser = () => {
   const { userId } = useParams(); // Lấy ID từ URL
   const navigate = useNavigate();
@@ -38,14 +41,37 @@ const DetailUser = () => {
   }
   const [data, setData] = useState([]);
   const [userEditData, setUserEditData] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPagePayment, setCurrentPagePayment] = useState(1);
+  const [itemsPerPagePayment, setItemsPerPagePayment] = useState(10);
   const token = localStorage.getItem("ACCESS_TOKEN");
   // const allUser = useSelector((state) => state.USER.allUser);
   const detailSalon = useSelector((state) => state.USER.detailSalon);
+  const salonDetail = useSelector((state) => state.SALON.salonDetail);
+  const reportBySalon = useSelector((state) => state.REQUEST.reportBySalon);
+  const paymentBySalonId = useSelector(
+    (state) => state.PAYMENT.paymentBySalonId
+  );
   console.log("detailCustomer", detailSalon);
+  console.log("reportBySalon", reportBySalon);
+  console.log("salonDetail", salonDetail);
+  console.log("paymentBySalonId", paymentBySalonId);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actGetSalonOwnerById(userId));
+    dispatch(GetSalonInformationByOwnerId(userId));
   }, [dispatch, userId]);
+  useEffect(() => {
+    dispatch(
+      GetPaymentBySalonId(userId, currentPagePayment, itemsPerPagePayment)
+    );
+  }, [dispatch, userId, currentPagePayment, itemsPerPagePayment]);
+  useEffect(() => {
+    if (salonDetail && salonDetail?.id) {
+      dispatch(GetReportBySalonId(salonDetail?.id, currentPage, itemsPerPage));
+    }
+  }, [dispatch, salonDetail, currentPage, itemsPerPage]);
   const [showDelete, setShowDelete] = useState(false);
   const [deleteData, setDeleteData] = useState({});
   console.log("Item data ", userEditData);

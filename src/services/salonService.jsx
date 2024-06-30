@@ -36,4 +36,7 @@ export const SalonInfomationService = {
   changeStatusSalon(data) {
     return API.post(`approvals/CreateApproval`, data);
   },
+  GetSalonInformationByOwnerId(id) {
+    return API.get(`/saloninformations/GetSalonInformationByOwnerId/${id}`);
+  },
 };

@@ -12,7 +12,7 @@ const Voucher = React.lazy(() => import("./views/Voucher/Voucher"));
 const CreateVoucher = React.lazy(() => import("./views/Voucher/CreateVoucher"));
 const ProductDetail = React.lazy(() => import("./views/Voucher/VoucherDetail"));
 const TransactionRequest = React.lazy(() =>
-  import("./views/Transaction/TransactionRequest")
+  import("./views/Transaction/Transaction")
 );
 const Home = React.lazy(() => import("./views/Home/Home"));
 const AccountDetail = React.lazy(() =>
@@ -25,7 +25,9 @@ const SalonDetail = React.lazy(() => import("./views/Salon/SalonDetail"));
 const AutionConfirm = React.lazy(() => import("./views/Salon/AuctionConfirm"));
 const BanRequest = React.lazy(() => import("./views/Account Ban/BanRequest"));
 const WalletHistory = React.lazy(() => import("./views/Wallet/WalletHistory"));
-
+const DetailTransaction = React.lazy(() =>
+  import("./views/Transaction/DetailTransaction")
+);
 const routes = [
   { path: "/", exact: true, name: "Home", element: Home },
   {
@@ -95,6 +97,12 @@ const routes = [
     path: "/transaction",
     name: "Transaction",
     element: TransactionRequest,
+    exact: true,
+  },
+  {
+    path: "/transaction-detail/:paymentId",
+    name: "TransactionDetail",
+    element: DetailTransaction,
     exact: true,
   },
   {

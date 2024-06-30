@@ -22,6 +22,7 @@ const AccountDetailSalon = React.lazy(() =>
   import("./views/AccountSalonOwner/AccountDetail")
 );
 const SalonDetail = React.lazy(() => import("./views/Salon/SalonDetail"));
+const ReportDetail = React.lazy(() => import("./views/Report/DetailReport"));
 const AutionConfirm = React.lazy(() => import("./views/Salon/AuctionConfirm"));
 const BanRequest = React.lazy(() => import("./views/Account Ban/BanRequest"));
 const WalletHistory = React.lazy(() => import("./views/Wallet/WalletHistory"));
@@ -66,6 +67,12 @@ const routes = [
     exact: true,
   },
   { path: "/Report", name: "Report", element: Report, exact: true },
+  {
+    path: "/Report-detail/:reportId",
+    name: "Report Detail",
+    element: ReportDetail,
+    exact: true,
+  },
   // {
   //   path: "/Report-detail/:auctionId",
   //   name: "Report Detail",

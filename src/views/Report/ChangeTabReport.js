@@ -18,98 +18,22 @@ import { GetAllReportByRoleName } from "src/store/request/action";
 const ChangeTabReport = (props) => {
   const {} = props;
   const token = localStorage.getItem("ACCESS_TOKEN");
-  const reportInformation = {
-    items: [
-      {
-        salonOwner: {
-          fullName: "Nguyễn Văn A",
-        },
-        customer: {
-          fullName: "Phạm Văn B",
-        },
-        salonInformation: {
-          name: "Demo Salon 1",
-        },
-        createDate: "2024-06-26T08:00:34.808Z",
-        timeConfirm: "2024-06-26T08:00:34.808Z",
-        status: "REPORT FROM CUSTOMER",
-      },
-      {
-        salonOwner: {
-          fullName: "Lê Thị C",
-        },
-        customer: {
-          fullName: "Trần Văn D",
-        },
-        salonInformation: {
-          name: "Demo Salon 2",
-        },
-        createDate: "2024-06-27T09:30:00.123Z",
-        timeConfirm: "2024-06-27T09:45:00.456Z",
-        status: "REPORT FROM CUSTOMER",
-      },
-      {
-        salonOwner: {
-          fullName: "Đỗ Thị E",
-        },
-        customer: {
-          fullName: "Ngô Văn F",
-        },
-        salonInformation: {
-          name: "Demo Salon 3",
-        },
-        createDate: "2024-06-28T10:15:20.789Z",
-        timeConfirm: "2024-06-28T10:30:20.789Z",
-        status: "REPORT FROM CUSTOMER",
-      },
-      {
-        salonOwner: {
-          fullName: "Phan Thị G",
-        },
-        customer: {
-          fullName: "Hoàng Văn H",
-        },
-        salonInformation: {
-          name: "Demo Salon 4",
-        },
-        createDate: "2024-06-29T11:20:30.123Z",
-        timeConfirm: "2024-06-29T11:35:30.456Z",
-        status: "REPORT FROM SALON OWNER",
-      },
-      {
-        salonOwner: {
-          fullName: "Nguyễn Thị I",
-        },
-        customer: {
-          fullName: "Lưu Văn J",
-        },
-        salonInformation: {
-          name: "Demo Salon 5",
-        },
-        createDate: "2024-06-30T12:40:50.789Z",
-        timeConfirm: "2024-06-30T12:55:50.101Z",
-        status: "REPORT FROM SALON OWNER",
-      },
-    ],
-    page: 1,
-    size: 10,
-    total: 5,
-    totalPages: 1,
-  };
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [activeTab, setActiveTab] = useState("CUSTOMER");
+  const [activeTab, setActiveTab] = useState("Customer");
   const reportByRole = useSelector((state) => state.REQUEST.reportByRole);
   console.log(activeTab);
-  console.log(reportByRole);
+  console.log("reportByRole", reportByRole);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GetAllReportByRoleName(activeTab, currentPage, itemsPerPage));
   }, [activeTab, currentPage, dispatch, itemsPerPage]);
 
   const navigate = useNavigate();
-  const filterByStatus = (status) => {
-    return reportInformation?.items?.filter((salon) => salon.status === status);
+  const handleUpdateUser = (report) => {
+    navigate(`/Report-detail/${report.id}`, {
+      state: { reportDetail: report },
+    });
   };
   // State để quản lý tab hiện tại
 
@@ -123,15 +47,15 @@ const ChangeTabReport = (props) => {
   // Xác định nội dung để hiển thị dựa trên tab đang được chọn
   let contentToDisplay;
   switch (activeTab) {
-    case "REPORT FROM CUSTOMER":
-      const dataFromCustomer = filterByStatus("REPORT FROM CUSTOMER");
+    case "Customer":
       contentToDisplay = (
         <div>
           {
             <TableReport
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              data={dataFromCustomer}
+              data={reportByRole?.items}
+              onUpdate={handleUpdateUser}
             />
           }
           <div
@@ -158,10 +82,10 @@ const ChangeTabReport = (props) => {
                 justifyContent: "center",
               }}
             >
-              {reportInformation.page}
+              {reportByRole.page}
             </p>
             <CButton
-              disabled={currentPage === reportInformation?.totalPages}
+              disabled={currentPage === reportByRole?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -172,15 +96,15 @@ const ChangeTabReport = (props) => {
         </div>
       );
       break;
-    case "REPORT FROM SALON OWNER":
-      const dataFromSalonOwner = filterByStatus("REPORT FROM SALON OWNER");
+    case "Salonowner":
       contentToDisplay = (
         <div>
           {
             <TableReport
               currentPage={currentPage}
               itemsPerPage={itemsPerPage}
-              data={dataFromSalonOwner}
+              data={reportByRole?.items}
+              onUpdate={handleUpdateUser}
             />
           }
           <div
@@ -207,10 +131,10 @@ const ChangeTabReport = (props) => {
                 justifyContent: "center",
               }}
             >
-              {reportInformation.page}
+              {reportByRole.page}
             </p>
             <CButton
-              disabled={currentPage === reportInformation?.totalPages}
+              disabled={currentPage === reportByRole?.totalPages}
               color="success"
               className="px-4"
               onClick={() => setCurrentPage(currentPage + 1)}

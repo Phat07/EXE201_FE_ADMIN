@@ -15,7 +15,7 @@ import Button from "react-bootstrap/Button";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 
-const CustomTable = ({ data = [], currentPage, itemsPerPage }) => {
+const CustomTable = ({ data = [], onUpdate, currentPage, itemsPerPage }) => {
   console.log("data: ", data);
 
   return (
@@ -50,17 +50,30 @@ const CustomTable = ({ data = [], currentPage, itemsPerPage }) => {
             {data?.map((item, index) => (
               <CTableRow key={index}>
                 <CTableDataCell>{index + 1}</CTableDataCell>
-                <CTableDataCell>{item?.salonInformation?.name}</CTableDataCell>
-                <CTableDataCell>{item?.customer?.fullName}</CTableDataCell>
-                <CTableDataCell>{item?.salonOwner?.fullName}</CTableDataCell>
+                <CTableDataCell>
+                  {item?.salonInformation?.name}
+                </CTableDataCell>
+                <CTableDataCell>
+                  {item?.customer?.fullName}
+                </CTableDataCell>
+                <CTableDataCell>{item?.salonInformation?.salonOwner?.fullName}</CTableDataCell>
                 <CTableDataCell>
                   {format(new Date(item?.createDate), "dd/MM/yyyy - hh:mm aa")}
                 </CTableDataCell>
                 <CTableDataCell>
-                  {format(new Date(item?.timeConfirm), "dd/MM/yyyy - hh:mm aa")}
+                  {item?.timeConfirm
+                    ? format(
+                        new Date(item.timeConfirm),
+                        "dd/MM/yyyy - hh:mm aa"
+                      )
+                    : "Chưa xác nhận"}
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CButton color="success">Detail</CButton>
+                  {onUpdate && (
+                    <CButton color="success" onClick={() => onUpdate(item)}>
+                      Detail
+                    </CButton>
+                  )}
                 </CTableDataCell>
               </CTableRow>
             ))}
@@ -79,6 +92,7 @@ CustomTable.propTypes = {
       status: PropTypes.string,
     })
   ),
+  onUpdate: PropTypes.func,
   currentPage: PropTypes.element,
   itemsPerPage: PropTypes.element,
 };
